@@ -12,7 +12,7 @@ __license__ = "MIT License"
 
 
 import mailbox
-
+import re
 
 def getbody(message): #getting plain text 'email body'
     body = None
@@ -30,9 +30,38 @@ def getbody(message): #getting plain text 'email body'
 
 
 mbox = mailbox.mbox('sutc.mbox')
+quoted = re.compile("\"(.*)\"")
+new_photo = re.compile("New photo")
+new_link = re.compile("New link")
 
 for message in mbox:
-    print message['from']
-    print message['subject']
-    text = getbody(message)
-    print text
+    payload = ""
+
+    # Check the subject for "New photo" and "New link" posts
+    # No need to examine the message body in these cases
+    if new_photo.search(message['subject']):
+        payload = "New photo"
+    elif new_link.search(message['subject']):
+        payload = "New link"
+    else:
+        # Check the body for a quoted string
+        body = getbody(message)
+
+        match = quoted.search(body)
+        # No match means that notification is for a comment
+        if match is not None:
+            payload = match.group()
+
+    # We have some output
+    if payload != "":
+        # Pull out the name of the poster
+        name = quoted.search(message['from'])
+        if name is None:
+            sender = ""
+        else:
+            sender = name.group()
+
+        # print the output
+        print sender
+        print message['date']
+        print payload
