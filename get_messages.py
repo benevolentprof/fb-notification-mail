@@ -13,6 +13,7 @@ __license__ = "MIT License"
 
 import mailbox
 import re
+import csv
 
 def getbody(message): #getting plain text 'email body'
     body = None
@@ -33,6 +34,8 @@ mbox = mailbox.mbox('sutc.mbox')
 quoted = re.compile("\"(.*)\"")
 new_photo = re.compile("New photo")
 new_link = re.compile("New link")
+
+msgOutput = open("vacPost.txt", "w")
 
 for message in mbox:
     payload = ""
@@ -65,3 +68,9 @@ for message in mbox:
         print sender
         print message['date']
         print payload
+
+        msgOutput.write(sender + "," + message ["date"] + "," + payload + "\n")  #Create a csv output file
+
+msgOutput.close()
+
+
