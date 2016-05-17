@@ -65,11 +65,13 @@ for message in mbox:
             sender = name.group()
 
         # print the output
-        print sender
-        print message['date']
-        print payload
+        # print sender
+        # print message['date']
+        # print payload
 
-        msgOutput.write(sender + "," + message ["date"] + "," + payload + "\n")  #Create a csv output file
+        output = sender + ",\"" + message["date"] + "\"," + payload + "\n"
+        #print output,
+        msgOutput.write(output)  #Create a csv output file
 
 msgOutput.close()
 
