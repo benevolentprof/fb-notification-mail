@@ -4,7 +4,6 @@ from urllib2 import urlopen #connect webpages from python
 from general_function import *
 from link_finder import linkFinder
 
-
 class spider:
     #class variable - is shared among all instances
     projectName = ''
@@ -43,13 +42,19 @@ class spider:
 
     @staticmethod
     def gatherLinks(pageUrl): #connect to the webpage and return set of links found on webpage
+        print("GATHERLINKS SURE IS RUNNING")
         htmlString = '' #response is in bytes so variable will be in string
+        print pageUrl
         try: #handle exception for network
+            print("AND SURE GOES INSIDE THE TRY")
             response = urlopen(pageUrl)
+            print ("THIS IS AFTER RESPONSE")
+            print response.getheader()
             if response.getheader('Content-Type') == 'text/html':
+                print ("IM IN THE IF-STATEMENT TOO")
                 htmlBytes = response.read() #read raw response which is 1s and 0s
                 htmlString = htmlBytes.decode("utf-8") #convert to readable characters which will be passed onto linkFinder
-            finder = linkFinder(spider.baseUrl, pageUrl)
+            finder = linkFinder(spider.baseUrl,pageUrl)
             finder.feed(htmlString)#pass the html data to parse it
         except:
             print 'Error: Cannot Crawl Page'
@@ -72,5 +77,6 @@ class spider:
         setToFile(spider.queue,spider.queueFile)
         setToFile(spider.crawled, spider.crawledFile)
 
+#disMahSmartSpider = spider ('Toronto', 'https://www.reddit.com/r/toronto', 'https://www.reddit.com')
 
 

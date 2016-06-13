@@ -2,9 +2,10 @@
 from HTMLParser import HTMLParser
 from urlparse import urlparse
 
+
 class linkFinder(HTMLParser):
 
-    def __init__(self, baseURL, paageURL):
+    def __init__(self, baseURL, pageURL):
         super(self).__init__()
         self.baseURL = baseURL
         self.pageURL = pageURL
