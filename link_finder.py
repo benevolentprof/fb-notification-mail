@@ -1,12 +1,13 @@
 """create a class to take a look at HTML and sift through it and find all the links/a tags"""
 from HTMLParser import HTMLParser
-from urlparse import urlparse
+import urlparse
 
 
 class linkFinder(HTMLParser):
 
     def __init__(self, baseURL, pageURL):
-        super(self).__init__()
+        super(type(self),self).__init__()
+        self.reset()
         self.baseURL = baseURL
         self.pageURL = pageURL
         self.links = set() #just to store in set
@@ -26,5 +27,5 @@ class linkFinder(HTMLParser):
         pass
 
 #finder = linkFinder()
-#finder.feed('<html><head><title>Test</title></head>')
+#finder.feed('https://www.reddit.com/r/toronto', 'https://www.reddit.com')
 

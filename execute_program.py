@@ -4,7 +4,7 @@ from spider_class import spider
 from expDomain import *
 
 PROJECT_NAME = 'Example'
-HOMEPAGE = 'https://www.reddit.com/r/toronto'
+HOMEPAGE = 'http://www.veterans.gc.ca/eng'
 DOMAIN_NAME = getDomainName(HOMEPAGE)
 QUEUED_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'

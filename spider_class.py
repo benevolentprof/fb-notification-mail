@@ -1,8 +1,9 @@
 """Building a spider - grab a link from the waiting list and connect to that page, grab all the HTML and throw into linkFinder (where it will be parsed)
   take link from waiting list into crawled file"""
-from urllib2 import urlopen #connect webpages from python
+import urllib2 #connect webpages from python
 from general_function import *
 from link_finder import linkFinder
+from httplib import HTTPResponse
 
 class spider:
     #class variable - is shared among all instances
@@ -32,6 +33,7 @@ class spider:
 
     @staticmethod
     def crawlPage(threadName, pageUrl):
+        print "",type(spider.gatherLinks(pageUrl))
         if pageUrl not in spider.crawled:
             print threadName + 'crawling  ' + pageUrl
             print 'Queue ' + str(len(spider.queue)) + '| Crawled ' + str(len(spider.crawled))
@@ -45,12 +47,13 @@ class spider:
         print("GATHERLINKS SURE IS RUNNING")
         htmlString = '' #response is in bytes so variable will be in string
         print pageUrl
+        request = urllib2.Request(pageUrl)
         try: #handle exception for network
             print("AND SURE GOES INSIDE THE TRY")
-            response = urlopen(pageUrl)
+            response = urllib2.urlopen(request)
             print ("THIS IS AFTER RESPONSE")
-            print response.getheader()
-            if response.getheader('Content-Type') == 'text/html':
+            #if response.info().getheader('Content-Type') == 'text/html':
+            if 'text/html' in response.info().getheader('Content-Type'):
                 print ("IM IN THE IF-STATEMENT TOO")
                 htmlBytes = response.read() #read raw response which is 1s and 0s
                 htmlString = htmlBytes.decode("utf-8") #convert to readable characters which will be passed onto linkFinder
