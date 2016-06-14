@@ -44,17 +44,17 @@ class spider:
 
     @staticmethod
     def gatherLinks(pageUrl): #connect to the webpage and return set of links found on webpage
-        print("GATHERLINKS SURE IS RUNNING")
+        #print("GATHERLINKS SURE IS RUNNING")
         htmlString = '' #response is in bytes so variable will be in string
         print pageUrl
         request = urllib2.Request(pageUrl)
         try: #handle exception for network
-            print("AND SURE GOES INSIDE THE TRY")
+            #print("AND SURE GOES INSIDE THE TRY")
             response = urllib2.urlopen(request)
-            print ("THIS IS AFTER RESPONSE")
+            #print ("THIS IS AFTER RESPONSE")
             #if response.info().getheader('Content-Type') == 'text/html':
             if 'text/html' in response.info().getheader('Content-Type'):
-                print ("IM IN THE IF-STATEMENT TOO")
+                #print ("IM IN THE IF-STATEMENT TOO")
                 htmlBytes = response.read() #read raw response which is 1s and 0s
                 htmlString = htmlBytes.decode("utf-8") #convert to readable characters which will be passed onto linkFinder
             finder = linkFinder(spider.baseUrl,pageUrl)
