@@ -25,7 +25,7 @@ def create_spiders():
 def work():
     while True:
         url = queue.get() #get the next item in the thread queue
-        spider.crawlPage(threading.current_thread.name, url)
+        spider.crawlPage(threading.current_thread().name, url)
         queue.task_done()
 
 
@@ -40,7 +40,7 @@ def create_jobs():
 #check in the there are items in the queue list
 def crawl():
     queued_links = fileToSet(QUEUED_FILE)
-    if len(queued_links)  > 0: #state how many links are left in the QUEUED_FILE
+    if len(queued_links) > 0: #state how many links are left in the QUEUED_FILE
         print str(len(queued_links)) + 'links in the queue'
         create_jobs()
 
