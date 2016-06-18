@@ -1,3 +1,4 @@
+from __future__ import print_function
 import re
 
 generate_links = re.compile('http://(.*)') #compile all http links
@@ -13,13 +14,12 @@ with open ("VAC\queue.txt", "r") as queued_list, open('newqueue.txt','w') as que
             match2 = generate_links3.search(links)
             if match2 is not None:
                 services_url = match2.group()
-                generate_links4 = re.findall('(.*)/search?(.*)', services_url) #findall error links
-                if generate_links4 not in services_url:
-                    print link
-                #print generate_links4
+               # print services_url
+                output = services_url + '\n '
+                #print output
+                queued_list_updated.write(output)
+                with open('newqueue.txt') as unsolved_links, open('valid_url.txt','w') as valid_url:
+                    cured_url = [line for line in unsolved_links.readlines() if 'search?' not in line]
 
-                # output = services_url + '\n '
-                # print output
-                # queued_list_updated.write(output)
-
-
+                    for url in cured_url:
+                        print(url, file=valid_url)
