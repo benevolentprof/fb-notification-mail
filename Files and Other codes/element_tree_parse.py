@@ -28,11 +28,16 @@ def metaVariables():
     return meta_description, meta_title, meta_creator, meta_issued, meta_modified, meta_subject, meta_language
 
 def main():
+    soup = urlOpener()
+    main_content = soup.find_all("main", {"property": "mainContentOfPage"})
+    for content in main_content:
+        header_1 = content.find_all("h1", {"property": "name"}) #Why is it incomplete?
+        paragraph = content.find_all("p")
+    return header_1, paragraph
 
 
 title = title()
 meta = metaVariables()
+main = main()
 
-
-
-
+print main
