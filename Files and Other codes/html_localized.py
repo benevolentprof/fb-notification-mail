@@ -1,17 +1,46 @@
+"""html_localiyzed.py
+
+    Paola Santiago
+    12 July 2016
+
+
+    input: file containing urls, one per line
+    output: a directory of files containing local versions of the urls in the input file
+
+    Strips off the http and domain prefix from URL
+    Creates file name by subsituting underbars for backslashes
+"""
+
 import urllib
 
-url =[]
-with open("validurl2.txt", "r") as file:
-    for row in file:
-        new_list = row.rstrip()
-        url.append(new_list)
-print url
+# specific run data here
+directory = "data"
+url_file = "validurl2.txt"
+prefix = "http://www.veterans.gc.ca/eng/"
 
-def create_html_file(url, html_file_name):
-    sock = urllib.urlopen(url)
-    htmlSource = sock.read()
+# grabs the data and saves it locally
+def create_html_file(remote_url, html_file_name):
+    sock = urllib.urlopen(remote_url)
+    html_source = sock.read()
     sock.close()
     with open(html_file_name, "w") as file_out:
-        return file_out.write(htmlSource)
+        return file_out.write(html_source)
 
-disabilities = create_html_file("http://www.veterans.gc.ca/eng/services/after-injury/disability-benefits/benefits-determined/table-of-disabilities/ch-04-2006", "ch4disabilities.xml")
+# reads in the URLs from a file
+url_list = []
+with open(url_file, "r") as u_file:
+    for row in u_file:
+        line = row.rstrip()
+        url_list.append(line)
+
+# iterates over urls
+for url in url_list:
+    # create a file name
+    start_index = len(prefix)
+    file_name = url[start_index:]
+    file_name = file_name.replace("/", "_")
+    file_name = directory + "/" + file_name
+
+    print file_name
+    create_html_file(url, file_name)
+
