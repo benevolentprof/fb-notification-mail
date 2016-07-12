@@ -3,13 +3,36 @@ This program parses HTML and treats element tree to get information with tags
 """
 import requests
 from bs4 import BeautifulSoup
+from os import listdir
+from os.path import isfile, join
 
-# vacSite = requests.get("http://www.veterans.gc.ca/eng/services/financial")
-# soup = BeautifulSoup(vacSite.content, "lxml")
+directory = "data"
+
+
+def get_file_list():
+    only_files = [f for f in listdir(directory) if isfile(join(directory, f))]
+    return only_files
+
+
+def parse_file(file_name):
+    with open(file_name, "r") as input_file:
+        print file_name
+        file_contents = input_file.read()
+
+        soup = BeautifulSoup(file_contents, "lxml")
+        web_title = soup.find_all("title")
+
+        print web_title
+
+
+
+file_list = get_file_list()
+
+for f in file_list:
+    parse_file(directory + "/" + f)
+
 def urlOpener():
-    vacSite = requests.get("http://www.veterans.gc.ca/eng/services/financial")
-    soup = BeautifulSoup(vacSite.content, "lxml")
-    return soup
+    print "I don't do anything"
 
 def title():
     soup = urlOpener()
@@ -36,8 +59,8 @@ def main():
     return header_1, paragraph
 
 
-title = title()
-meta = metaVariables()
-main = main()
-
-print main
+# title = title()
+# meta = metaVariables()
+# main = main()
+#
+# print main
