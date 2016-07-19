@@ -42,17 +42,19 @@ def parse_file(file_name):
             paragraph = str(paragraph)
         # all_content = web_title + "\n" + meta_description + "\n" + meta_title + "\n" + meta_creator + "\n" + meta_issued + "\n" + meta_modified + "\n" + meta_subject + "\n" +  meta_language + "\n" + header_1 + "\n" + paragraph
         # all_content = str(all_content)
+
         all_content = web_title, meta_description, meta_title, meta_creator, meta_issued, meta_modified, meta_subject, meta_language, header_1, paragraph
-        for info in all_content:
-            print info
+        with open("workinfo.txt", "w") as output_file:
+            for info in all_content:
+                output_file.write(info)
         # with open("all_content.txt", "w") as output_file:
         #     return output_file.write(all_content)
 
 
-file_list = get_file_list()
+#file_list = get_file_list()
 
-for f in file_list:
-    parse_file(directory + "/" + f)
+#for f in file_list:
+parse_file(directory + '/services_health_mental-health_providers_reports')
 
 
 #
