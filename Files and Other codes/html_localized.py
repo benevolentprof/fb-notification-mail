@@ -23,6 +23,7 @@ def create_html_file(remote_url, html_file_name):
     sock = urllib.urlopen(remote_url)
     html_source = sock.read()
     sock.close()
+    print html_source
     with open(html_file_name, "w") as file_out:
         return file_out.write(html_source)
 
@@ -39,7 +40,7 @@ for url in url_list:
     start_index = len(prefix)
     file_name = url[start_index:]
     file_name = file_name.replace("/", "_")
-    file_name = directory + "/" + file_name
+    file_name =  directory + "/" + file_name
 
     print file_name
     create_html_file(url, file_name)
