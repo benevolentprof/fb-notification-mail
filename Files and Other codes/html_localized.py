@@ -40,7 +40,7 @@ for url in url_list:
     start_index = len(prefix)
     file_name = url[start_index:]
     file_name = file_name.replace("/", "_")
-    file_name =  directory + "/" + file_name
+    file_name = directory + "/" + file_name
 
     print file_name
     create_html_file(url, file_name)
